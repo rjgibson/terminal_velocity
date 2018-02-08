@@ -11,13 +11,11 @@ setup(
     description="A fast note-taking app for the UNIX terminal",
     long_description=open("README.md").read(),
     install_requires=[
-        "urwid==1.1.1",
-        "chardet==2.1.1",
+        "urwid",
+        "chardet",
         ],
     classifiers=[
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2 :: Only',
-        'Programming Language :: Python :: 2.6',
-        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3 :: Only',
         ],
 )
