@@ -28,7 +28,6 @@ def system(cmd, loop):
     loop.screen.stop()
 
     cmd = "{0}".format(cmd)
-    cmd = cmd.encode("utf-8")  # FIXME: Correct encoding?
     safe_cmd = shlex.split(cmd)
 
     logger.debug("System command: {0}".format(safe_cmd))

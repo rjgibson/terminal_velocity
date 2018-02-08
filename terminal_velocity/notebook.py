@@ -60,50 +60,6 @@ import sys
 import chardet
 
 
-def unicode_or_bust(raw_text):
-    """Return the given raw text data decoded to unicode.
-
-    If the text cannot be decoded, return None.
-
-    """
-    encodings = ["utf-8"]
-    for encoding in (sys.getfilesystemencoding(), sys.getdefaultencoding()):
-        # I would use a set for this, but they don't maintain order.
-        if encoding not in encodings:
-            encodings.append(encoding)
-
-    for encoding in encodings:
-        if encoding:  # getfilesystemencoding() may return None
-            try:
-                decoded = str(raw_text, encoding=encoding)
-                return decoded
-            except UnicodeDecodeError:
-                pass
-
-    # If none of those guesses worked, let chardet have a go.
-    encoding = chardet.detect(raw_text)["encoding"]
-    if encoding and encoding not in encodings:
-        try:
-            decoded = str(raw_text, encoding=encoding)
-            logger.debug("File decoded with chardet, encoding was {0}".format(
-                encoding))
-            return decoded
-        except UnicodeDecodeError:
-            pass
-        except LookupError:
-            pass
-
-    # I've heard that decoding with cp1252 never fails, so try that last.
-    try:
-        decoded = str(raw_text, encoding="cp1252")
-        logger.debug("File decoded with encoding cp1252")
-        return decoded
-    except UnicodeDecodeError:
-        pass
-
-    # If nothing worked then give up.
-    return None
-
 
 class Error(Exception):
     """Base class for exceptions in this module."""
@@ -217,7 +173,7 @@ class PlainTextNote(object):
 
     @property
     def contents(self):
-        contents = unicode_or_bust(open(self.abspath, "r").read())
+        contents = open(self.abspath, "r").read()
         if contents is None:
             logger.error(
                 "Could not decode file contents: {0}".format(self.abspath))
@@ -358,7 +314,7 @@ class PlainTextNoteBook(object):
                 abspath = os.path.join(root, filename)
                 relpath = os.path.relpath(abspath, self.path)
                 relpath, ext = os.path.splitext(relpath)
-                unicode_relpath = unicode_or_bust(relpath)
+                unicode_relpath = relpath ##,unicode_or_bust(relpath)
                 if relpath is None:
                     # The filename could not be decoded.
                     logger.error(
