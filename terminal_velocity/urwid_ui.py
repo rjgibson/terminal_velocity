@@ -313,6 +313,20 @@ class MainFrame(urwid.Frame):
         self.suppress_filter = False
         self.suppress_focus = False
 
+        # Configure EMACS-like keystrokes as aliases for navigation keys
+        if key == "ctrl b":
+            key = "left"
+        elif key == "ctrl f":
+            key = "right"
+        elif key == "ctrl n":
+            key = "down"
+        elif key == "ctrl p":
+            key = "up"
+        elif key == "ctrl a":
+            key = "home"
+        elif key == "ctrl e":
+            key = "end"
+
         if key in ["esc", "ctrl d"]:
             if self.selected_note:
                 # Clear the selected note.
@@ -349,7 +363,7 @@ class MainFrame(urwid.Frame):
         elif key in ["ctrl x"]:
             self.quit()
 
-        elif self.selected_note and key in ["tab", "left", "right"]:
+        elif self.selected_note and key in ["tab", "left", "right", "home", "end"]:
             if self.search_box.consume():
                 return None
             else:
