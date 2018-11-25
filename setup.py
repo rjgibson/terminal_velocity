@@ -1,8 +1,9 @@
 from setuptools import setup
 
+exec(open('terminal_velocity/_version.py').read())
 setup(
     name="terminal_velocity",
-    version="0.1.10",
+    version=__version__,
     author="Sean Hammond, Vincent Perricone",
     packages=["terminal_velocity"],
     scripts=["bin/terminal_velocity"],

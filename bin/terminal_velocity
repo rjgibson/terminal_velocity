@@ -9,6 +9,7 @@ import logging.handlers
 import sys
 
 import terminal_velocity.urwid_ui as urwid_ui
+from terminal_velocity._version import __version__
 
 
 def main():
@@ -78,6 +79,8 @@ the default default will be used"""
     parser.add_argument("-p", "--print-config", dest="print_config",
             action="store_true", default=False,
             help="print your configuration settings then exit")
+
+    parser.add_argument('-v', '--version', action='version', version='%(prog)s ' + __version__)
 
     parser.add_argument("notes_dir", action="store", nargs="?",
         default=defaults.get("notes_dir", "~/Notes"),
